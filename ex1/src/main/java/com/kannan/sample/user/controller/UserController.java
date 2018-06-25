@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kannan.sample.user.service.UserService;
+import com.kannan.sample.user.util.Custom204Exception;
+import com.kannan.sample.user.util.CustomResponseEntity;
 import com.kannan.sample.user.vo.User;
-import com.kannan.sample.util.Custom204Exception;
-import com.kannan.sample.util.Custom404Exception;
-import com.kannan.sample.util.CustomResponseEntity;
 
 @RestController
 @RequestMapping("/api")
@@ -28,7 +27,7 @@ public class UserController {
 	public ResponseEntity<?> listAllUsers() throws Custom204Exception {
 		List<User> users = userService.findAllUsers();
 		if (users.isEmpty()) {
-			throw new Custom404Exception("No user found");
+			throw new Custom204Exception("No user found");
 		}
 		return buildResponseEntity(users);
 	}
@@ -37,7 +36,7 @@ public class UserController {
 	public ResponseEntity<?> getUser(@PathVariable("name") String name) throws Custom204Exception {
 		List<User> users = userService.findByName(name);
 		if (users.isEmpty()) {
-			throw new Custom404Exception("User Name " + name + " not found");
+			throw new Custom204Exception("User Name " + name + " not found");
 		}
 		return buildResponseEntity(users);
 	}
